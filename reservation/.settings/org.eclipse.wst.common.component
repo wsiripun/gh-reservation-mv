@@ -4,9 +4,8 @@
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/java"/>
-        <dependent-module archiveName="mysql-connector-java-5.1.38-bin.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/WSDIR/TEST_RESERVATION_MV_REDO/reservation/vendors/mysql-connector-java-5.1.38/mysql-connector-java-5.1.38-bin.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/target/classes"/>
+        <wb-resource deploy-path="/WEB-INF/lib" source-path="/vendors/mysql-connector-java-5.1.38"/>
         <property name="context-root" value="reservation"/>
         <property name="java-output-path" value="/reservation/target/classes"/>
     </wb-module>
