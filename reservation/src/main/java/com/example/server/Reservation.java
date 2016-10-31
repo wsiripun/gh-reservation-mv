@@ -1,9 +1,18 @@
 package com.example.server;
  
+
+
 import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import com.example.db.dao.AttendantDAO;
 import com.example.db.model.Attendant;
+import com.example.db.model.AttendantWrapper;
+
+
+
+//import sample.Produces;
 
 
  
@@ -41,7 +50,7 @@ public class Reservation
     @GET
     @Path("insert")
     @Produces("text/plain")
-    public String sayHello(@QueryParam("fname") String firstName,
+    public String insert(@QueryParam("fname") String firstName,
     		@QueryParam("lname") String lastName) {
         if ((firstName != null) && (lastName != null)) {
             // if the query parameter "name" is there
@@ -58,6 +67,32 @@ public class Reservation
             return "Hello MYFIRST RESOURCE " + firstName +  "  lastName=" + lastName;
         }
         return "Hello World! FINAL RETurn";
-    } 
+    }
+    
+    @GET
+    @Path("list1")
+    @Produces("text/plain")
+    public String list1() {
+
+        return (new AttendantDAO()).getAllUsers().toString();
+    }
+
+    
+    @GET
+    @Path("list")
+    @Produces("application/json")		// For xml, change "json" to "xml". It works.
+    public Response list() {
+    	System.out.println("WIJS: from list all attendants  111");
+    	AttendantWrapper wrapper = new AttendantWrapper();
+
+		wrapper.setList((new AttendantDAO()).getAllUsers());
+    	
+//    	List<Attendant> allAttendants = (new AttendantDAO()).getAllUsers();
+    	return Response.status(200).entity(wrapper).build();
+    }
+    
+    
+    
+    
     
 }

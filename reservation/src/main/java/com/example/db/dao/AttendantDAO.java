@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,18 +18,19 @@ import com.mysql.jdbc.Driver;
 
 
 public class AttendantDAO {
-	public boolean createAttendant(Attendant attendant) {
-		
-        Connection connection = null;
-        Statement st = null;
-        ResultSet rs = null;
-        
+	private Connection connection = null;
+	
+	public AttendantDAO (){
+		connection = DbUtil.getConnection();
+	}
+	
+	public boolean createAttendant(Attendant attendant) {     
         
         try {
             Driver jdbcDriver = new com.mysql.jdbc.Driver ();
         	DriverManager.registerDriver(jdbcDriver);
         	connection = DbUtil.getConnection();
-            st = connection.createStatement();
+        	Statement st = connection.createStatement();
             
 			PreparedStatement preparedStatement = connection
 					.prepareStatement("insert into attendant(firstname,lastname,email,phoneNumber) values (?, ?, ?, ? )");
@@ -38,7 +41,7 @@ public class AttendantDAO {
 			preparedStatement.setString(4, "630-123-4567");
 			preparedStatement.executeUpdate();
                     
-            rs = st.executeQuery("SELECT VERSION()");
+			ResultSet rs = st.executeQuery("SELECT VERSION()");
 
             if (rs.next()) {
                 
@@ -51,31 +54,32 @@ public class AttendantDAO {
             Logger lgr = Logger.getLogger(Version.class.getName());
             lgr.log(Level.SEVERE, ex.getMessage(), ex);
 
-        } finally {
-            
-            try {
-                
-                if (rs != null) {
-                    rs.close();
-                }
-                
-                if (st != null) {
-                    st.close();
-                }
-                
-                if (connection != null) {
-                	connection.close();
-                }
-
-            } catch (SQLException ex) {
-                
-                Logger lgr = Logger.getLogger(Version.class.getName());
-                lgr.log(Level.WARNING, ex.getMessage(), ex);
-            }
-        }
+        } 
         
 		return true;
 	}
+	
+	
+	
+    public List<Attendant> getAllUsers() {
+        List<Attendant> attendants = new ArrayList<Attendant>();
+        try {
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery("select * from attendant");
+            while (rs.next()) {
+            	Attendant attendant = new Attendant();
+            	attendant.setFirstName(rs.getString("firstname"));
+            	attendant.setLastName(rs.getString("lastname"));
+            	attendant.setPhoneNumber(rs.getString("phoneNumber"));
+            	attendant.setEmail(rs.getString("email"));
+            	attendants.add(attendant);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return attendants;
+    }	
 	
 	
 
