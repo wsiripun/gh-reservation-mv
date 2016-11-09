@@ -1,18 +1,62 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
 <title>PNE Ticket</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
-    $("button").click(function(){
-        $("#div1").load("/reservation/tutorial/list");
-    });
+    $("#button1").click(function(){
+       // SHOW 3 THINGS:
+       //  A. Using load()
+       //  B. Using $.getJSON()
+       //  C. Using jQuery to create HTML table.
+       
+       // SECTION A:
+       // load() is for Loads data from a server and puts the 
+       // returned data into the selected element
+       $("#div1").load("/reservation/tutorial/list");  
+       
+       
+       // SECTION B:
+       // $.getJSON() Loads JSON-encoded data from a server using a 
+       // HTTP GET request 
+       // JSON OUTPUT:  {"list":[{"firstName":"111","lastName":"222","email":"wstest@gmail.com","phoneNumber":"630-123-4567"},{"firstName":"oct31","lastName":"sss","email":"wstest@gmail.com","phoneNumber":"630-123-4567"}]}
+       $.getJSON("/reservation/tutorial/list", function(result){
+        	console.log(result);
+            $.each(result, function(key, value){   // "list" : [ ]
+                alert ("key=" + key);				// key is "list"
+                // Loop over array [ {}, {} ]
+                $.each(value, function(index, obj){  // [{}, {}] 
+                	alert("index=" + index);		// index of array 0, 1, ...
+                	$.each(obj, function (key, value){ 
+                		alert (key + ": " + value);  // firstName: 111, lastName: 222, etc 
+                	})
+                })
+            });
+        });
+        
+
+	// SECTION C:
+	var myTab = '<table border="2"> \
+		<tr> \
+			<th>Name</th> \
+			<th>Telephone</th> \
+		</tr> \
+		<tr> \
+			<td> r1c1 </td> \
+			<td> r1c2 </td> \
+		</tr> \
+		<tr> \
+			<td> r2c1 </td> \
+			<td> r2c2 </td>   \
+		</tr> \
+	</table>';
+	$("#div2").append(myTab);
+  });
 });
 </script>
-
 </head>
+
 <body>
 	<h1>PNE Ticket Request Form</h1>
 	<h3>
@@ -31,14 +75,12 @@ $(document).ready(function(){
 	<h3>You can also list all the people who already have the tickets</h3>
 
 
-	<button>ListAll Using JQuery</button>
+	<button id="button1">ListAll Using JQuery</button>
 
 	<div id="div1">
 	<p>This is a temp text. It will be replaced with JSon output</p>
 	</div>
-
-
-
-
+	
+	<div id="div2"></div>
 </body>
 </html>
