@@ -8,7 +8,7 @@ $(document).ready(function(){
     $("#button1").click(function(){
        // SHOW 3 THINGS:
        //  A. Using load()
-       //  B. Using $.getJSON()
+       //  B. Using $.getJSON() and create HTML <table> with JSON data
        //  C. Using jQuery to create HTML table.
        
        // SECTION A:
@@ -21,19 +21,34 @@ $(document).ready(function(){
        // $.getJSON() Loads JSON-encoded data from a server using a 
        // HTTP GET request 
        // JSON OUTPUT:  {"list":[{"firstName":"111","lastName":"222","email":"wstest@gmail.com","phoneNumber":"630-123-4567"},{"firstName":"oct31","lastName":"sss","email":"wstest@gmail.com","phoneNumber":"630-123-4567"}]}
+
+       var myTable = "<table border=3>"  +
+       				"<tr>"  +
+       					"<th>First Name</th>" +
+       					"<th>Last Name</th>"  +
+       					"<th>Email Address</th>"  +
+       					"<th>Phone Number</th>"  +
+       				"</tr>";  
        $.getJSON("/reservation/tutorial/list", function(result){
-        	console.log(result);
             $.each(result, function(key, value){   // "list" : [ ]
-                alert ("key=" + key);				// key is "list"
+                //alert ("key=" + key);				// key is "list"
                 // Loop over array [ {}, {} ]
                 $.each(value, function(index, obj){  // [{}, {}] 
-                	alert("index=" + index);		// index of array 0, 1, ...
+                	//alert("index=" + index);		// index of array 0, 1, ...
+                	myTable = myTable + "<tr>";
                 	$.each(obj, function (key, value){ 
-                		alert (key + ": " + value);  // firstName: 111, lastName: 222, etc 
+                		//alert (key + ": " + value);  // firstName: 111, lastName: 222, etc
+                		//console.log ("MYTABLE_INSIDE=" + myTable);
+                		myTable = myTable + "<td>" + value + "</td>";
                 	})
+                	myTable = myTable + "</tr>";
                 })
             });
+            myTable = myTable + "</table>";
+            //console.log ("MYTABLE=" + myTable);
+            $("#div3").append(myTable);
         });
+
         
 
 	// SECTION C:
@@ -80,7 +95,7 @@ $(document).ready(function(){
 	<div id="div1">
 	<p>This is a temp text. It will be replaced with JSon output</p>
 	</div>
-	
 	<div id="div2"></div>
+	<div id="div3"></div>
 </body>
 </html>
