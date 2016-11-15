@@ -78,7 +78,7 @@ public class Reservation
     }
 
     
-    @GET
+    @GET			//@POST also works. Also change to 'post' in Reserve.html
     @Path("list")
     @Produces("application/json")		// For xml, change "json" to "xml". It works.
     public Response list() {
