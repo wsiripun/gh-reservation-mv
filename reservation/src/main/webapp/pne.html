@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>PNE College Reunion</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+
+<script>
+
+function hideAll() {
+	// Hide all three panels.
+	$("#homePanel").css("display", "none");
+	$("#registerPanel").css("display", "none");
+	$("#listPanel").css("display", "none");
+}
+
+function showPanel(whichOne) {
+	// First hide all panels before turning on the one we want.
+	hideAll();
+	
+	// Turn on the one we want.
+	if (whichOne == "homePanel") {
+		$("#homePanel").css("display", "initial");
+	} else if (whichOne == "registerPanel") {
+		$("#registerPanel").css("display", "initial");
+	} else if (whichOne == "listPanel") {
+		$("#listPanel").css("display", "initial");
+	}
+	
+}
+
+// Retrieve all attendants from server and create a table to show them
+function getAllAttendants() {
+    // $.getJSON() Loads JSON-encoded data from a server using a 
+    // HTTP GET request 
+    // JSON OUTPUT:  {"list":[{"firstName":"111","lastName":"222","email":"wstest@gmail.com","phoneNumber":"630-123-4567"},{"firstName":"oct31","lastName":"sss","email":"wstest@gmail.com","phoneNumber":"630-123-4567"}]}
+	var myTable = "<h1>All Registered Attendants</h1><br>";
+    myTable = myTable + "<table border=3>"  +
+    				"<tr>"  +
+    					"<th>First Name</th>" +
+    					"<th>Last Name</th>"  +
+    					"<th>Email Address</th>"  +
+    					"<th>Phone Number</th>"  +
+    				"</tr>";  
+    $.getJSON("/reservation/tutorial/list", function(result){
+         $.each(result, function(key, value){   // "list" : [ ]
+             //alert ("key=" + key);				// key is the string "list"
+             // Loop over array [ {}, {} ]
+             $.each(value, function(index, obj){
+             	//alert("index=" + index);		// index of array is:  0, 1, ...
+             	myTable = myTable + "<tr>";
+             	$.each(obj, function (key, value){ 
+             		//alert (key + ": " + value);  // firstName: 111, lastName: 222, etc
+             		//console.log ("MYTABLE_INSIDE=" + myTable);
+             		myTable = myTable + "<td>" + value + "</td>";
+             	})
+             	myTable = myTable + "</tr>";
+             })
+         });
+         myTable = myTable + "</table>";
+
+         $("#listPanel").empty();			// empty listPanel
+         $("#listPanel").append(myTable);   // add the table just created
+         showPanel("listPanel");
+     });
+	
+}
+
+$(document).ready(function(){
+    $(".menuitem").mouseenter(function(){
+        $(this).css("background-color", "lightblue");
+    });
+    $(".menuitem").mouseleave(function(){
+        $(this).css("background-color", "orange");
+    });
+    $("#homeButton").click(function(){
+    	showPanel("homePanel");
+    });
+    $("#registerButton").click(function(){
+    	showPanel("registerPanel");
+    });
+    $("#listButton").click(function(){
+    	getAllAttendants();
+    });
+    
+    showPanel("homePanel");
+
+});
+</script>
+
+
+<style>
+#topPanel {
+    position: relative;
+	height: 120px;
+	background-color: orange;
+}
+
+h2 {
+	position: absolute;
+	top: 10px;
+	left: 30%;
+    text-align: center;
+}
+
+img {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+
+.menuitem {
+	display: inline;
+	padding: 6px;
+    margin: 6px;
+    border: 1px solid blue;
+	border-radius: 5px;
+	font-size: larger;
+}
+
+#menubar {
+	position: absolute;
+	right: 0px;
+	bottom: 0px;
+}
+
+#mainPanel {
+	width: 50%;
+	margin: auto;
+	padding: 20px;
+}
+
+.registerForm {
+	font-size: larger;
+}
+
+</style>
+
+
+</head>
+<body>
+	<div id="topPanel">
+		<h2>COLLEGE REUNION REGISTRATION</h2>
+		<img alt="kkuicon" src="IMG_0014.JPG" style="height: 120px">
+		<div id="menubar">
+			<ul id="menulist">
+				<li id="homeButton" class="menuitem">Home</li>
+				<li id="registerButton" class="menuitem">Register</li>
+				<li id="listButton" class="menuitem">List Attendants</li>
+
+			</ul>
+		</div>
+	</div>
+
+	<div id="mainPanel">
+		<div id="homePanel">
+
+			<h1>WELCOME TO THE CLASS OF 1982 REUNION</h1>
+			<h3>abcdef kdkdk kdk</h3>
+			<br>
+			<br>
+			<h3>Please enter your information and click the Request Ticket
+				button</h3>
+		</div>
+
+		<div id="registerPanel">
+			<h1>PNE Ticket Request Form</h1>
+			<h3>Please enter your information and click the Request Ticket
+				button</h3>
+			<br>
+			<br>
+			<form class="registerForm" action="/reservation/tutorial/insert"
+				method="get">
+				First Name: <input type="text" name="fname"><br> <br>
+				Last Name: <input type="text" name="lname"><br> <br>
+				<input type="submit" name="serverAction" value="RequestTicket">
+			</form>
+		</div>
+		<div  id="listPanel">		
+		</div>		
+	</div>
+</body>
+</html>
