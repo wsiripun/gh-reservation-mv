@@ -1,6 +1,8 @@
 .jumbotron { 
-    background-color: black; /* blue */
+    background-color: #c80000; /* blue */
     color: #ffffff;
+    margin-top:0;
+    margin: 0;
 }
 
 #map {
@@ -10,10 +12,35 @@
 }
 
 .navbar-default{
-    background: #0f006f;
-    border-color: #030033;
+    background: gold;
+    border-color: #ffffff;
+    margin-bottom:0;
+}
+
+.navbar li {
+	border-style: solid;
+	border-left: solid #ffffff;
+	border-top: none;
+	border-right: none;
+	border-bottom: none;
 }
 
 .body {
 	color: green;
 }
+
+.button {
+	border-color: #ffffff;
+}
+
+#attendeeDiv {
+	background: #ffff84;
+	text-align: center;
+}
+
+#attendeeDivButton {
+	text-align: center;
+	margin: 50px 0;
+	font-size: 25px;
+}
+
