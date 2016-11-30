@@ -1,5 +1,91 @@
 <html>
+<head>
+<meta charset="utf-8">
+  <title>Reunion Registration</title>
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="index.css">
+</head>
 <body>
-<h2>Hello World!  from webapp/index.html</h2>
+<!-- NAVIGATION BAR -->
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Thammasat Reunion</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+      	<li><a href="reserve.html">Register</a></li>
+        <li><a href="#">Attendees</a></li>
+        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Thai</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- JUMBOTRON - Name of the University -->
+<div class="jumbotron text-center">
+  <h1>Thammasat University</h1> 
+  <h2>Class of '82 Reunion</h2> 
+  <button type="button" class="btn btn-danger">Register</button>
+</div>
+
+<!-- List of people -->
+<div class="container-fluid" id="attendeeDiv">
+  <div class="col-sm-8">
+    <h2>Reconnect & Rekindle</h2>
+    <h2>old friends with your</h2>
+    <h2>classmates of times past</h2>
+  </div>
+  <div class="col-sm-4" id="attendeeDivButton">
+      <button class="btn btn-default btn-lg">See who's going</button>
+  </div>
+</div>
+
+<!-- Map and Meetup details -->
+<div class="container-fluid">
+	<div class="col-sm-6">
+		<div id="map"></div>
+	</div>
+	<div class="col-sm-6">
+		<h1>Thammasat University</h1>
+		<h2>Class '82 Reunion</h2>
+		<p>WHERE: ... </p>
+		<p>WHEN: ...</p>
+	</div>
+</div>
+
+<div>
+<p>owiefj
+</p>
+</div>
+
+<script>
+function myMap() {
+  var mapCanvas = document.getElementById("map");
+  var mapOptions = {
+    center: new google.maps.LatLng(51.508742,-0.120850),
+    zoom: 5
+  };
+  var map = new google.maps.Map(mapCanvas, mapOptions);
+}
+</script>
+
+<!--  <script src="https://maps.googleapis.com/maps/api/js?callback=myMap"></script> -->
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlVazpSiYJ_hzf405ELBChC9WY3PVMzwo&callback=myMap"
+  type="text/javascript"></script>
+  
 </body>
 </html>
